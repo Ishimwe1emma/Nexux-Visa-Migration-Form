@@ -7,592 +7,89 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg-deep: #020617;
-            --navy-velvet: #0a0f2c;
-            --royal-blue: #1e4bd2;
-            --blue-radiant: #3b82f6;
-            --gold-hungary: #eab308;
-            --gold-glow: #fde047;
-            --glass-white: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --card-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            --success-emerald: #10b981;
-            --cherry-blossom: #f43f5e;
-            --text-dim: #cbd5e1;
+            --bg-deep: #020617; --navy-velvet: #0a0f2c; --royal-blue: #1e4bd2;
+            --blue-radiant: #3b82f6; --gold-hungary: #eab308; --gold-glow: #fde047;
+            --glass-white: rgba(255,255,255,0.05); --glass-border: rgba(255,255,255,0.08);
+            --card-shadow: 0 25px 40px -12px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.05);
+            --success-emerald: #10b981; --cherry-blossom: #f43f5e; --text-dim: #cbd5e1;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at 10% 20%, #0a1128, #020617);
-            color: #f1f5f9;
-            overflow-x: hidden;
-        }
-
-        /* animated background particles */
-        .particle-field {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background-image: radial-gradient(circle at 25% 40%, rgba(234, 179, 8, 0.08) 1.5px, transparent 1.5px);
-            background-size: 32px 32px;
-            animation: driftParticles 28s linear infinite;
-        }
-
-        @keyframes driftParticles {
-            0% { background-position: 0 0; }
-            100% { background-position: 64px 64px; }
-        }
-
-        /* floating glass orb effect */
-        .orb {
-            position: fixed;
-            width: 60vw;
-            height: 60vw;
-            background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, rgba(59,130,246,0) 70%);
-            border-radius: 50%;
-            filter: blur(60px);
-            z-index: 0;
-            pointer-events: none;
-        }
-
+        body { font-family: 'Inter',sans-serif; background: radial-gradient(circle at 10% 20%,#0a1128,#020617); color: #f1f5f9; overflow-x: hidden; }
+        .particle-field { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: radial-gradient(circle at 25% 40%,rgba(234,179,8,0.08) 1.5px,transparent 1.5px); background-size: 32px 32px; animation: driftParticles 28s linear infinite; }
+        @keyframes driftParticles { 0% { background-position: 0 0; } 100% { background-position: 64px 64px; } }
+        .orb { position: fixed; width: 60vw; height: 60vw; background: radial-gradient(circle,rgba(59,130,246,0.12) 0%,rgba(59,130,246,0) 70%); border-radius: 50%; filter: blur(60px); z-index: 0; pointer-events: none; }
         .orb-1 { top: -20vh; right: -10vw; animation: float 14s infinite alternate; }
-        .orb-2 { bottom: -30vh; left: -15vw; background: radial-gradient(circle, rgba(234,179,8,0.08) 0%, rgba(234,179,8,0) 70%); animation: float 18s infinite alternate-reverse; }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, 40px) scale(1.1); }
-        }
-
-        /* main container */
-        .app-wrapper {
-            max-width: 1420px;
-            margin: 0 auto;
-            padding: 1.2rem 2rem 3rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* header premium */
-        .prestige-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--glass-border);
-            backdrop-filter: blur(8px);
-            
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .badge-shield {
-            background: linear-gradient(145deg, #b91c1c, #7f1d1d);
-            width: 52px;
-            height: 52px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 8px 20px rgba(185, 28, 28, 0.3);
-        }
-
-        .brand-text h1 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 1.6rem;
-            background: linear-gradient(135deg, #fff, var(--gold-hungary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .brand-text p {
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            color: var(--text-dim);
-        }
-
-        .security-tag {
-            background: rgba(16, 185, 129, 0.12);
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        /* step progress */
-        .step-progress {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .step-pill {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 0.6rem 1.2rem;
-            border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            backdrop-filter: blur(8px);
-            transition: all 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .step-pill.active {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: var(--royal-blue);
-            color: var(--gold-glow);
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
-        }
-
-        .step-pill.done {
-            background: rgba(16, 185, 129, 0.2);
-            border-color: var(--success-emerald);
-        }
-
-        /* glassmorphic card */
-        .glass-panel {
-            background: rgba(10, 18, 40, 0.65);
-            backdrop-filter: blur(14px);
-            border: 1px solid var(--glass-border);
-            border-radius: 2rem;
-            box-shadow: var(--card-shadow);
-            margin-bottom: 2rem;
-            transition: all 0.3s;
-        }
-
-        .panel-header {
-            padding: 1.2rem 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .panel-icon {
-            background: linear-gradient(145deg, #1e293b, #0f172a);
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px;
-            font-size: 1.3rem;
-            color: var(--gold-hungary);
-        }
-
-        .panel-title {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            font-size: 1.3rem;
-        }
-
-        .panel-sub {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-
-        .panel-body {
-            padding: 2rem;
-        }
-
-        /* modern form grid */
-        .form-nova {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .field-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .field-group.full-width {
-            grid-column: span 2;
-        }
-
-        label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #94a3b8;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        input, select, textarea {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 14px;
-            padding: 12px 16px;
-            color: white;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--royal-blue);
-            box-shadow: 0 0 0 3px rgba(30, 75, 210, 0.2);
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        input[readonly] {
-            background: rgba(59, 130, 246, 0.08);
-            border-color: rgba(59, 130, 246, 0.3);
-            color: #b9e0ff;
-            font-weight: 500;
-        }
-
-        .required-star::after {
-            content: '*';
-            color: #f97316;
-            margin-left: 4px;
-        }
-
-        /* upload zones */
-        .upload-dashboard {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.2rem;
-        }
-
-        .upload-card {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 1.2rem;
-            padding: 1.3rem;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.25s ease;
-            position: relative;
-        }
-
-        .upload-card.completed {
-            border-color: var(--success-emerald);
-            background: rgba(16, 185, 129, 0.08);
-        }
-
-        .upload-icon-lg {
-            font-size: 2rem;
-            color: var(--royal-blue);
-            margin-bottom: 8px;
-        }
-
-        .upload-card.completed .upload-icon-lg {
-            color: var(--success-emerald);
-        }
-
-        .status-badge {
-            font-size: 0.7rem;
-            margin-top: 6px;
-            color: var(--success-emerald);
-            word-break: break-all;
-        }
-
-        /* celebration overlay + redirect feature */
-        .congrats-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .congrats-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .congrats-card {
-            background: linear-gradient(145deg, #0f172a, #020617);
-            border-radius: 2.5rem;
-            padding: 2.5rem;
-            text-align: center;
-            max-width: 500px;
-            border: 1px solid var(--gold-hungary);
-            box-shadow: 0 25px 45px rgba(0,0,0,0.6), 0 0 0 2px rgba(234,179,8,0.3);
-            animation: zoomWin 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-
-        @keyframes zoomWin {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .congrats-card i {
-            font-size: 4rem;
-            color: var(--gold-hungary);
-            margin-bottom: 1rem;
-        }
-
-        .congrats-card h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin: 0.5rem 0;
-        }
-        .btn-excellent {
-            background: linear-gradient(105deg, #eab308, #facc15);
-            color: #0a0f2c;
-            font-weight: 700;
-            box-shadow: 0 4px 12px rgba(234,179,8,0.5);
-            border: none;
-        }
-        /* checklist */
-        .checklist-modern {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .check-item {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 1rem 1.2rem;
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .check-item:hover {
-            background: rgba(255, 255, 255, 0.07);
-        }
-
-        .check-item input {
-            display: none;
-        }
-
-        .fake-checkbox {
-            width: 22px;
-            height: 22px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .check-item input:checked + .fake-checkbox {
-            background: var(--royal-blue);
-            border-color: var(--royal-blue);
-        }
-
-        .check-item input:checked + .fake-checkbox::after {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            font-size: 0.7rem;
-            color: white;
-        }
-
-        /* hungary gallery */
-        .hungary-gallery {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.8rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .heritage-img {
-            background: rgba(0,0,0,0.5);
-            border-radius: 1.2rem;
-            padding: 0.6rem 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(234,179,8,0.4);
-            transition: transform 0.2s;
-        }
-
-        .heritage-img:hover {
-            transform: translateY(-3px);
-            background: rgba(0,0,0,0.7);
-        }
-
-        .heritage-img img {
-            width: 44px;
-            height: 44px;
-            object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .uni-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-
-        .heritage-img span {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #facc15;
-        }
-
-        .flag-icon {
-            width: 40px;
-            border-radius: 6px;
-            border: 1px solid rgba(255,215,0,0.5);
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1.5rem;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-weight: 600;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.85rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(105deg, #1e4bd2, #2563eb);
-            color: white;
-            box-shadow: 0 6px 14px rgba(30, 75, 210, 0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: white;
-        }
-
-        .btn-success {
-            background: linear-gradient(105deg, #0d9488, #14b8a6);
-            box-shadow: 0 6px 14px rgba(13, 148, 136, 0.3);
-        }
-
-        .btn-primary:hover, .btn-success:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.05);
-        }
-        .btn-excellent:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.05);
-        }
-
-        .info-sidebar {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-            margin-top: 1.5rem;
-        }
-
-        .info-tile {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(12px);
-            border-radius: 1.5rem;
-            padding: 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .ref-number {
-            font-family: monospace;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: var(--gold-hungary);
-        }
-
-        .toast-alert {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: #1e293b;
-            backdrop-filter: blur(20px);
-            padding: 1rem 1.8rem;
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 1000;
-            transform: translateY(120px);
-            opacity: 0;
-            transition: 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            font-weight: 500;
-            border-left: 4px solid var(--success-emerald);
-        }
-
-        .toast-alert.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        @media (max-width: 800px) {
-            .app-wrapper { padding: 1rem; }
-            .form-nova { grid-template-columns: 1fr; }
-            .field-group.full-width { grid-column: span 1; }
-            .upload-dashboard { grid-template-columns: 1fr; }
-            .panel-body { padding: 1.2rem; }
-            .hungary-gallery { gap: 0.6rem; }
-            .heritage-img { padding: 0.4rem 0.8rem; }
-            .heritage-img img { width: 32px; height: 32px; }
-        }
-
-        .fade-step {
-            animation: fadeSlide 0.5s ease;
-        }
-        @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        footer {
-            margin-top: 3rem;
-            text-align: center;
-            font-size: 0.7rem;
-            color: #475569;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 2rem;
-        }
+        .orb-2 { bottom: -30vh; left: -15vw; background: radial-gradient(circle,rgba(234,179,8,0.08) 0%,rgba(234,179,8,0) 70%); animation: float 18s infinite alternate-reverse; }
+        @keyframes float { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(40px,40px) scale(1.1); } }
+        .app-wrapper { max-width: 1420px; margin: 0 auto; padding: 1.2rem 2rem 3rem; position: relative; z-index: 10; }
+        .prestige-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--glass-border); backdrop-filter: blur(8px); }
+        .brand { display: flex; align-items: center; gap: 1rem; }
+        .badge-shield { background: linear-gradient(145deg,#b91c1c,#7f1d1d); width: 52px; height: 52px; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 8px 20px rgba(185,28,28,0.3); }
+        .brand-text h1 { font-family: 'Playfair Display',serif; font-weight: 700; font-size: 1.6rem; background: linear-gradient(135deg,#fff,var(--gold-hungary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .brand-text p { font-size: 0.7rem; letter-spacing: 1px; color: var(--text-dim); }
+        .step-progress { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .step-pill { background: rgba(255,255,255,0.04); padding: 0.6rem 1.2rem; border-radius: 100px; font-size: 0.8rem; font-weight: 500; backdrop-filter: blur(8px); transition: all 0.2s; border: 1px solid transparent; }
+        .step-pill.active { background: rgba(59,130,246,0.2); border-color: var(--royal-blue); color: var(--gold-glow); box-shadow: 0 0 10px rgba(59,130,246,0.3); }
+        .step-pill.done { background: rgba(16,185,129,0.2); border-color: var(--success-emerald); }
+        .glass-panel { background: rgba(10,18,40,0.65); backdrop-filter: blur(14px); border: 1px solid var(--glass-border); border-radius: 2rem; box-shadow: var(--card-shadow); margin-bottom: 2rem; transition: all 0.3s; }
+        .panel-header { padding: 1.2rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 1rem; }
+        .panel-icon { background: linear-gradient(145deg,#1e293b,#0f172a); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 20px; font-size: 1.3rem; color: var(--gold-hungary); }
+        .panel-title { font-family: 'Playfair Display',serif; font-weight: 600; font-size: 1.3rem; }
+        .panel-sub { font-size: 0.75rem; color: var(--text-dim); }
+        .panel-body { padding: 2rem; }
+        .form-nova { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+        .field-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .field-group.full-width { grid-column: span 2; }
+        label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; display: flex; align-items: center; gap: 6px; }
+        input,select,textarea { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 12px 16px; color: white; font-size: 0.9rem; transition: all 0.2s; font-family: 'Inter',sans-serif; }
+        input:focus,select:focus,textarea:focus { outline: none; border-color: var(--royal-blue); box-shadow: 0 0 0 3px rgba(30,75,210,0.2); background: rgba(0,0,0,0.6); }
+        input[readonly] { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.3); color: #b9e0ff; font-weight: 500; }
+        .required-star::after { content: '*'; color: #f97316; margin-left: 4px; }
+        .upload-dashboard { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.2rem; }
+        .upload-card { background: rgba(0,0,0,0.3); border: 2px dashed rgba(255,255,255,0.2); border-radius: 1.2rem; padding: 1.3rem; text-align: center; cursor: pointer; transition: 0.25s ease; position: relative; }
+        .upload-card.completed { border-color: var(--success-emerald); background: rgba(16,185,129,0.08); }
+        .upload-icon-lg { font-size: 2rem; color: var(--royal-blue); margin-bottom: 8px; }
+        .upload-card.completed .upload-icon-lg { color: var(--success-emerald); }
+        .status-badge { font-size: 0.7rem; margin-top: 6px; color: var(--success-emerald); word-break: break-all; }
+        .congrats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .congrats-overlay.active { opacity: 1; visibility: visible; }
+        .congrats-card { background: linear-gradient(145deg,#0f172a,#020617); border-radius: 2.5rem; padding: 2.5rem; text-align: center; max-width: 500px; border: 1px solid var(--gold-hungary); box-shadow: 0 25px 45px rgba(0,0,0,0.6),0 0 0 2px rgba(234,179,8,0.3); animation: zoomWin 0.5s cubic-bezier(0.2,0.9,0.4,1.1); }
+        @keyframes zoomWin { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .congrats-card i { font-size: 4rem; color: var(--gold-hungary); margin-bottom: 1rem; }
+        .congrats-card h2 { font-family: 'Playfair Display',serif; font-size: 2rem; margin: 0.5rem 0; }
+        .btn-excellent { background: linear-gradient(105deg,#eab308,#facc15); color: #0a0f2c; font-weight: 700; box-shadow: 0 4px 12px rgba(234,179,8,0.5); border: none; }
+        .checklist-modern { display: flex; flex-direction: column; gap: 0.8rem; }
+        .check-item { background: rgba(255,255,255,0.03); padding: 1rem 1.2rem; border-radius: 1rem; display: flex; align-items: center; gap: 1rem; cursor: pointer; transition: 0.2s; }
+        .check-item:hover { background: rgba(255,255,255,0.07); }
+        .check-item input { display: none; }
+        .fake-checkbox { width: 22px; height: 22px; background: rgba(255,255,255,0.1); border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.3); }
+        .check-item input:checked + .fake-checkbox { background: var(--royal-blue); border-color: var(--royal-blue); }
+        .check-item input:checked + .fake-checkbox::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 0.7rem; color: white; }
+        .hungary-gallery { display: flex; gap: 1rem; margin-bottom: 1.8rem; flex-wrap: wrap; justify-content: center; }
+        .heritage-img { background: rgba(0,0,0,0.5); border-radius: 1.2rem; padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.8rem; backdrop-filter: blur(6px); border: 1px solid rgba(234,179,8,0.4); transition: transform 0.2s; }
+        .heritage-img:hover { transform: translateY(-3px); background: rgba(0,0,0,0.7); }
+        .heritage-img img { width: 44px; height: 44px; object-fit: cover; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .uni-img { width: 50px; height: 50px; border-radius: 10px; object-fit: cover; }
+        .heritage-img span { font-size: 0.75rem; font-weight: 600; color: #facc15; }
+        .flag-icon { width: 40px; border-radius: 6px; border: 1px solid rgba(255,215,0,0.5); }
+        .button-group { display: flex; justify-content: space-between; margin-top: 1.5rem; gap: 1rem; flex-wrap: wrap; }
+        .btn { padding: 12px 28px; border-radius: 40px; font-weight: 600; border: none; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.2s; font-size: 0.85rem; }
+        .btn-primary { background: linear-gradient(105deg,#1e4bd2,#2563eb); color: white; box-shadow: 0 6px 14px rgba(30,75,210,0.3); }
+        .btn-secondary { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: white; }
+        .btn-success { background: linear-gradient(105deg,#0d9488,#14b8a6); box-shadow: 0 6px 14px rgba(13,148,136,0.3); }
+        .btn-primary:hover,.btn-success:hover,.btn-excellent:hover { transform: translateY(-2px); filter: brightness(1.05); }
+        .info-sidebar { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1.5rem; }
+        .info-tile { background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); border-radius: 1.5rem; padding: 1.2rem; border: 1px solid rgba(255,255,255,0.05); }
+        .ref-number { font-family: monospace; font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; color: var(--gold-hungary); }
+        .toast-alert { position: fixed; bottom: 2rem; right: 2rem; background: #1e293b; backdrop-filter: blur(20px); padding: 1rem 1.8rem; border-radius: 60px; display: flex; align-items: center; gap: 12px; z-index: 1000; transform: translateY(120px); opacity: 0; transition: 0.3s cubic-bezier(0.2,0.9,0.4,1.1); font-weight: 500; border-left: 4px solid var(--success-emerald); }
+        .toast-alert.show { transform: translateY(0); opacity: 1; }
+        @media (max-width:800px) { .app-wrapper { padding: 1rem; } .form-nova { grid-template-columns: 1fr; } .field-group.full-width { grid-column: span 1; } .upload-dashboard { grid-template-columns: 1fr; } .panel-body { padding: 1.2rem; } .hungary-gallery { gap: 0.6rem; } .heritage-img { padding: 0.4rem 0.8rem; } .heritage-img img { width: 32px; height: 32px; } }
+        .fade-step { animation: fadeSlide 0.5s ease; }
+        @keyframes fadeSlide { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        footer { margin-top: 3rem; text-align: center; font-size: 0.7rem; color: #475569; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem; }
+        /* FIX 1: confetti @keyframes defined once in CSS — no style tag injection on every submit */
+        @keyframes fall { to { transform: translateY(100vh); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -611,7 +108,6 @@
         </div>
     </div>
 
-    <!-- Hungary imagery -->
     <div class="hungary-gallery">
         <div class="heritage-img"><img src="https://images.pexels.com/photos/20257613/pexels-photo-20257613.jpeg" alt="Hungarian Flag" class="flag-icon"><span>Magyarország</span></div>
         <div class="heritage-img"><img src="https://images.pexels.com/photos/34457222/pexels-photo-34457222.jpeg" alt="University of Szeged" class="uni-img"><span>Uni of Szeged</span></div>
@@ -663,12 +159,12 @@
         <div class="button-group"><button class="btn btn-secondary" id="backToStep0"><i class="fas fa-chevron-left"></i> Back</button><button class="btn btn-primary" id="nextToStep2">Proceed to Documents <i class="fas fa-cloud-upload-alt"></i></button></div>
     </div>
 
-    <!-- STEP 2: REAL UPLOADS -->
+    <!-- STEP 2 -->
     <div id="step2Container" style="display:none;" class="fade-step">
         <div class="glass-panel"><div class="panel-header"><div class="panel-icon"><i class="fas fa-folder-open"></i></div><div><div class="panel-title">Verification Assets</div><div class="panel-sub">Upload real PDF/Image files from your device</div></div></div>
             <div class="panel-body">
                 <div class="upload-dashboard" id="uploadDashboard"></div>
-                <p class="text-dim" style="font-size:0.7rem; margin-top: 1rem;"><i class="fas fa-check-circle"></i> Click any card to select file (PNG, JPG, PDF up to 5MB). Files stored locally.</p>
+                <p class="text-dim" style="font-size:0.7rem;margin-top:1rem;"><i class="fas fa-check-circle"></i> Click any card to select file (PNG, JPG, PDF up to 5MB). Files stored locally.</p>
             </div>
         </div>
         <div class="button-group"><button class="btn btn-secondary" id="backToStep1"><i class="fas fa-chevron-left"></i> Back</button><button class="btn btn-primary" id="nextToStep3">Review Declaration <i class="fas fa-scroll"></i></button></div>
@@ -679,14 +175,14 @@
         <div class="glass-panel"><div class="panel-header"><div class="panel-icon"><i class="fas fa-scale-balanced"></i></div><div><div class="panel-title">Official Declaration</div><div class="panel-sub">Legal confirmation & data consent</div></div></div>
             <div class="panel-body">
                 <div class="checklist-modern" id="checklistContainer"></div>
-                <div class="info-sidebar" style="margin-top: 1.5rem;"><div class="info-tile"><i class="fas fa-shield-alt"></i> <strong>Secure vault</strong><br><span style="font-size:0.7rem;">Files & data stored locally</span></div>
+                <div class="info-sidebar" style="margin-top:1.5rem;"><div class="info-tile"><i class="fas fa-shield-alt"></i> <strong>Secure vault</strong><br><span style="font-size:0.7rem;">Files & data stored locally</span></div>
                 <div class="info-tile"><i class="fas fa-envelope"></i> <strong>Email confirmation</strong><br><span style="font-size:0.7rem;">Summary + reference</span></div></div>
             </div>
         </div>
         <div class="button-group"><button class="btn btn-secondary" id="backToStep2"><i class="fas fa-chevron-left"></i> Back</button><button class="btn btn-success" id="finalSubmitAction"><i class="fas fa-paper-plane"></i> Submit Application</button></div>
     </div>
 
-    <div class="info-sidebar" style="margin-top: 0.5rem;">
+    <div class="info-sidebar" style="margin-top:0.5rem;">
         <div class="info-tile"><i class="fas fa-hashtag"></i> <span style="font-size:0.65rem;">REFERENCE ID</span><div class="ref-number" id="displayReference">HSP-2026-RW-04817</div></div>
         <div class="info-tile"><i class="fas fa-chart-line"></i> <span style="font-size:0.65rem;">PROGRAM STATUS</span><div><span id="globalStatus">Ready for submission</span></div></div>
     </div>
@@ -694,10 +190,17 @@
 </div>
 
 <div id="toastMsg" class="toast-alert"><i class="fas fa-circle-check"></i> <span id="toastText"></span></div>
-<div id="congratsOverlay" class="congrats-overlay"><div class="congrats-card"><i class="fas fa-trophy"></i><i class="fas fa-check-circle" style="margin-left: 0.5rem;"></i><h2>Application Submitted!</h2><p id="congratsRef"></p><p style="margin: 1rem 0;">🎉 Congratulations! Your Hungarian visa application is officially received.</p><button class="btn btn-excellent" id="closeCongratsRedirect"><i class="fas fa-check-double"></i> Excellent · Continue to Main Portal</button></div></div>
+<div id="congratsOverlay" class="congrats-overlay">
+    <div class="congrats-card">
+        <i class="fas fa-trophy"></i><i class="fas fa-check-circle" style="margin-left:0.5rem;"></i>
+        <h2>Application Submitted!</h2>
+        <p id="congratsRef"></p>
+        <p style="margin:1rem 0;">🎉 Congratulations! Your Hungarian visa application is officially received.</p>
+        <button class="btn btn-excellent" id="closeCongratsRedirect"><i class="fas fa-check-double"></i> Excellent · Continue to Main Portal</button>
+    </div>
+</div>
 
 <script>
-    // Document tracking with REAL file objects
     let uploadedFiles = {
         doc1: { name: null, file: null, status: false },
         doc2: { name: null, file: null, status: false },
@@ -706,54 +209,65 @@
     };
 
     const docConfig = [
-        { id: 'doc1', label: 'National ID copy', icon: 'fas fa-id-card', required: true },
-        { id: 'doc2', label: 'Passport photo', icon: 'fas fa-camera', required: true },
-        { id: 'doc3', label: 'Signature', icon: 'fas fa-file-alt', required: true },
-        { id: 'doc4', label: 'Visa GAS fee receipt', icon: 'fas fa-receipt', required: true }
+        { id: 'doc1', label: 'National ID copy',    icon: 'fas fa-id-card',  required: true },
+        { id: 'doc2', label: 'Passport photo',       icon: 'fas fa-camera',   required: true },
+        { id: 'doc3', label: 'Signature',            icon: 'fas fa-file-alt', required: true },
+        { id: 'doc4', label: 'Visa GAS fee receipt', icon: 'fas fa-receipt',  required: true }
     ];
 
     function buildUploadUI() {
         const container = document.getElementById('uploadDashboard');
-        if(!container) return;
+        if (!container) return;
         container.innerHTML = '';
         docConfig.forEach((doc) => {
             const card = document.createElement('div');
+            // FIX 2: completed class applied correctly on every rebuild from uploadedFiles state
             card.className = `upload-card ${uploadedFiles[doc.id].status ? 'completed' : ''}`;
             card.setAttribute('data-docid', doc.id);
+
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
             fileInput.accept = 'image/*,application/pdf';
             fileInput.style.display = 'none';
             fileInput.classList.add(`file-${doc.id}`);
             fileInput.addEventListener('change', (e) => handleFileSelection(doc.id, e.target.files[0], card));
+
             const icon = document.createElement('i');
             icon.className = `${doc.icon} upload-icon-lg`;
+
             const titleDiv = document.createElement('div');
             titleDiv.innerText = doc.label;
+
             const statusSpan = document.createElement('div');
             statusSpan.className = 'status-badge';
             statusSpan.id = `${doc.id}Status`;
-            if(uploadedFiles[doc.id].status) statusSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${uploadedFiles[doc.id].name.substring(0,25)}`;
-            else statusSpan.innerHTML = '';
+            // FIX 2: restore filename label from in-memory state (covers localStorage restore too)
+            if (uploadedFiles[doc.id].status) {
+                statusSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${uploadedFiles[doc.id].name.substring(0, 25)}`;
+            }
+
             card.appendChild(icon);
             card.appendChild(titleDiv);
             card.appendChild(statusSpan);
             card.appendChild(fileInput);
-            card.addEventListener('click', (e) => { if(e.target !== fileInput) fileInput.click(); });
+            card.addEventListener('click', (e) => { if (e.target !== fileInput) fileInput.click(); });
             container.appendChild(card);
         });
     }
 
     function handleFileSelection(docId, file, cardElement) {
-        if(!file) return;
+        if (!file) return;
         const valid = file.type.startsWith('image/') || file.type === 'application/pdf';
-        if(!valid) { showToastMessage('Only images or PDF files allowed.', true); return; }
-        if(file.size > 5 * 1024 * 1024) { showToastMessage('Max file size 5MB', true); return; }
+        if (!valid) { showToastMessage('Only images or PDF files allowed.', true); return; }
+        if (file.size > 5 * 1024 * 1024) { showToastMessage('Max file size 5MB', true); return; }
+
         uploadedFiles[docId] = { name: file.name, file: file, status: true };
+
         const statusSpan = document.getElementById(`${docId}Status`);
-        if(statusSpan) statusSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${file.name.substring(0,25)}`;
+        if (statusSpan) statusSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${file.name.substring(0, 25)}`;
         cardElement.classList.add('completed');
         showToastMessage(`${file.name} uploaded successfully`, false);
+
         const reader = new FileReader();
         reader.onload = function(ev) {
             localStorage.setItem(`visa_${docId}_data`, ev.target.result);
@@ -766,7 +280,7 @@
         docConfig.forEach(doc => {
             const storedData = localStorage.getItem(`visa_${doc.id}_data`);
             const storedName = localStorage.getItem(`visa_${doc.id}_name`);
-            if(storedData && storedName) {
+            if (storedData && storedName) {
                 uploadedFiles[doc.id].status = true;
                 uploadedFiles[doc.id].name = storedName;
                 uploadedFiles[doc.id].file = null;
@@ -780,29 +294,37 @@
     }
 
     let currentStep = 0;
-    const containers = [document.getElementById('step0Container'), document.getElementById('step1Container'), document.getElementById('step2Container'), document.getElementById('step3Container')];
+    const containers = [
+        document.getElementById('step0Container'),
+        document.getElementById('step1Container'),
+        document.getElementById('step2Container'),
+        document.getElementById('step3Container')
+    ];
     const stepPills = document.querySelectorAll('.step-pill');
 
     function updateStepUI(step) {
-        containers.forEach((c, idx) => { if(c) c.style.display = idx === step ? 'block' : 'none'; });
+        containers.forEach((c, idx) => { if (c) c.style.display = idx === step ? 'block' : 'none'; });
         stepPills.forEach((pill, idx) => {
             pill.classList.remove('active', 'done');
             if (idx < step) pill.classList.add('done');
             else if (idx === step) pill.classList.add('active');
         });
         currentStep = step;
+        // FIX 2: rebuild upload UI every time step 2 is shown so completed state
+        // is always accurate after navigating away and back
+        if (step === 2) buildUploadUI();
     }
 
     function isStep1Valid() {
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const curUni = document.getElementById('currentUni').value.trim();
-        const acad = document.getElementById('academicLevel').value;
-        const uni = document.getElementById('hungarianUni').value;
-        const travel = document.getElementById('travelDate').value;
-        const emergName = document.getElementById('emergencyName').value.trim();
+        const email      = document.getElementById('email').value.trim();
+        const phone      = document.getElementById('phone').value.trim();
+        const curUni     = document.getElementById('currentUni').value.trim();
+        const acad       = document.getElementById('academicLevel').value;
+        const uni        = document.getElementById('hungarianUni').value;
+        const travel     = document.getElementById('travelDate').value;
+        const emergName  = document.getElementById('emergencyName').value.trim();
         const emergPhone = document.getElementById('emergencyPhone').value.trim();
-        const address = document.getElementById('address').value.trim();
+        const address    = document.getElementById('address').value.trim();
         if (!email || !phone || !curUni || !acad || !uni || !travel || !emergName || !emergPhone || !address) return false;
         if (!email.includes('@')) return false;
         return true;
@@ -817,76 +339,94 @@
     }
 
     function showToastMessage(msg, isError = false) {
-        const toast = document.getElementById('toastMsg');
+        const toast    = document.getElementById('toastMsg');
         const textSpan = document.getElementById('toastText');
         textSpan.innerText = msg;
-        toast.style.background = isError ? '#b91c1c' : '#0f172a';
+        toast.style.background      = isError ? '#b91c1c' : '#0f172a';
         toast.style.borderLeftColor = isError ? '#f97316' : '#10b981';
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    // REDIRECT TO MAIN PAGE AFTER CLICKING EXCELLENT
     function redirectToMainPage() {
-        // Simulate redirect to main dashboard / homepage (current origin or custom main page).
-        // You can change this URL to your actual main page (e.g., "/dashboard", "/main", or "https://yourdomain.com")
-        const mainPageUrl = window.location.origin + window.location.pathname + '#main';
-        // Using replace for clean navigation, or assign href.
-        window.location.href = mainPageUrl;
-        // alternative: window.location.assign("/main.html");
+        // Clear all step 1 form fields
+        ['email','phone','currentUni','travelDate','emergencyName','emergencyPhone'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+        document.getElementById('academicLevel').value = '';
+        document.getElementById('hungarianUni').value = '';
+        document.getElementById('address').value = '';
+
+        // Clear upload state — memory and localStorage
+        docConfig.forEach(doc => {
+            uploadedFiles[doc.id] = { name: null, file: null, status: false };
+            localStorage.removeItem(`visa_${doc.id}_data`);
+            localStorage.removeItem(`visa_${doc.id}_name`);
+        });
+
+        // Reset submit button
+        const submitBtn = document.getElementById('finalSubmitAction');
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '';
+
+        // Reset status bar
+        document.getElementById('globalStatus').innerText = 'Ready for submission';
+        document.getElementById('displayReference').innerText = 'HSP-2026-RW-04817';
+
+        // Rebuild declarations (unchecked)
+        buildDeclarations();
+
+        // Go back to step 0 (identity — read-only, nothing to clear)
+        updateStepUI(0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function showCelebration(ref) {
         const overlay = document.getElementById('congratsOverlay');
         document.getElementById('congratsRef').innerHTML = `Reference: <strong>${ref}</strong>`;
         overlay.classList.add('active');
-        // Excellent button now triggers redirect
+
         const excellentBtn = document.getElementById('closeCongratsRedirect');
-        // Remove any previous listeners to avoid double redirect
         const newBtn = excellentBtn.cloneNode(true);
         excellentBtn.parentNode.replaceChild(newBtn, excellentBtn);
-        newBtn.addEventListener('click', (e) => {
+        newBtn.addEventListener('click', () => {
             overlay.classList.remove('active');
             redirectToMainPage();
         });
-        // confetti effect
-        for(let i=0;i<45;i++) {
+
+        // FIX 1: @keyframes fall is now in CSS above — no style tag appended on every call
+        for (let i = 0; i < 45; i++) {
             const conf = document.createElement('div');
-            conf.innerHTML = ['🎉','✨','🎊','🇭🇺','📜','⭐'][Math.floor(Math.random()*6)];
-            conf.style.position = 'fixed';
-            conf.style.left = Math.random() * 100 + '%';
-            conf.style.top = '-20px';
-            conf.style.fontSize = '1.6rem';
-            conf.style.pointerEvents = 'none';
-            conf.style.zIndex = '2100';
-            conf.style.animation = `fall ${Math.random() * 2 + 1.2}s linear forwards`;
+            conf.innerHTML = ['🎉','✨','🎊','🇭🇺','📜','⭐'][Math.floor(Math.random() * 6)];
+            conf.style.cssText = `position:fixed;left:${Math.random()*100}%;top:-20px;font-size:1.6rem;pointer-events:none;z-index:2100;animation:fall ${Math.random()*2+1.2}s linear forwards;`;
             document.body.appendChild(conf);
             setTimeout(() => conf.remove(), 3000);
         }
-        const styleSheet = document.createElement("style");
-        styleSheet.textContent = `@keyframes fall { to { transform: translateY(100vh); opacity: 0; } }`;
-        document.head.appendChild(styleSheet);
     }
 
     function storeAndSubmit() {
-        if (!isStep1Valid()) { showToastMessage('Complete all visa details.', true); updateStepUI(1); return; }
-        if (!allDocsUploadedReal()) { showToastMessage('Please upload all 4 documents.', true); updateStepUI(2); return; }
+        if (!isStep1Valid())           { showToastMessage('Complete all visa details.', true);       updateStepUI(1); return; }
+        if (!allDocsUploadedReal())    { showToastMessage('Please upload all 4 documents.', true);  updateStepUI(2); return; }
         if (!allDeclarationsChecked()) { showToastMessage('Please accept all declarations.', true); updateStepUI(3); return; }
 
         const refNumber = 'HSP-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 9000 + 1000);
         document.getElementById('displayReference').innerText = refNumber;
+
         const applicationBundle = {
             reference: refNumber, submittedAt: new Date().toISOString(),
-            personal: { fullName: document.getElementById('fullName').value, nationalId: document.getElementById('nationalId').value },
+            personal:    { fullName: document.getElementById('fullName').value, nationalId: document.getElementById('nationalId').value },
             visaDetails: { email: document.getElementById('email').value, phone: document.getElementById('phone').value, university: document.getElementById('hungarianUni').value },
             filesUploaded: true, declarations: true
         };
         let allApps = JSON.parse(localStorage.getItem('hungary_visa_apps') || '[]');
         allApps.push(applicationBundle);
         localStorage.setItem('hungary_visa_apps', JSON.stringify(allApps));
+
         document.getElementById('globalStatus').innerHTML = `Submitted · ${refNumber}`;
         showCelebration(refNumber);
         showToastMessage(`✅ Application submitted! Ref: ${refNumber}`, false);
+
         const submitBtn = document.getElementById('finalSubmitAction');
         submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Submitted';
         submitBtn.disabled = true;
@@ -895,7 +435,7 @@
 
     function buildDeclarations() {
         const container = document.getElementById('checklistContainer');
-        if(!container) return;
+        if (!container) return;
         const checks = [
             "I confirm that all information is accurate and complete.",
             "I understand that false information leads to disqualification.",
@@ -908,7 +448,7 @@
             label.className = 'check-item';
             const cb = document.createElement('input');
             cb.type = 'checkbox';
-            cb.id = `decl${idx+1}`;
+            cb.id = `decl${idx + 1}`;
             cb.checked = true;
             const fake = document.createElement('div');
             fake.className = 'fake-checkbox';
@@ -917,18 +457,18 @@
             label.appendChild(cb);
             label.appendChild(fake);
             label.appendChild(span);
-            label.addEventListener('click', (e) => { if(e.target.tagName !== 'INPUT') { cb.checked = !cb.checked; } });
+            label.addEventListener('click', (e) => { if (e.target.tagName !== 'INPUT') cb.checked = !cb.checked; });
             container.appendChild(label);
         });
     }
 
-    // Event listeners
+    // Event listeners — unchanged from original
     document.getElementById('nextToStep1').onclick = () => updateStepUI(1);
-    document.getElementById('backToStep0').onclick = () => updateStepUI(0);
-    document.getElementById('nextToStep2').onclick = () => { if(isStep1Valid()) updateStepUI(2); else showToastMessage('Fill all required visa details (*)', true); };
-    document.getElementById('backToStep1').onclick = () => updateStepUI(1);
-    document.getElementById('nextToStep3').onclick = () => { if(allDocsUploadedReal()) updateStepUI(3); else showToastMessage('Please upload all required documents', true); };
-    document.getElementById('backToStep2').onclick = () => updateStepUI(2);
+    document.getElementById('backToStep0').onclick  = () => updateStepUI(0);
+    document.getElementById('nextToStep2').onclick  = () => { if (isStep1Valid()) updateStepUI(2); else showToastMessage('Fill all required visa details (*)', true); };
+    document.getElementById('backToStep1').onclick  = () => updateStepUI(1);
+    document.getElementById('nextToStep3').onclick  = () => { if (allDocsUploadedReal()) updateStepUI(3); else showToastMessage('Please upload all required documents', true); };
+    document.getElementById('backToStep2').onclick  = () => updateStepUI(2);
     document.getElementById('finalSubmitAction').onclick = storeAndSubmit;
 
     restoreUploadedFromLocal();
